@@ -1,0 +1,27 @@
+Resources:
+  AWSConfigRule:
+    Type: 'AWS::Config::ConfigRule'
+    Properties:
+      ConfigRuleName: !Ref ConfigRuleName
+      Description: >-
+        A config rule that Checks whether your AWS account is enabled to use
+        multi-factor authentication (MFA) hardware device to sign in with root
+        credentials. The rule is NON_COMPLIANT if any virtual MFA devices are
+        permitted for signing in with root credentials.
+        If any statement has 'Effect': 'Allow' with 'Action': '*' over
+        'Resource': '*', the rule is NON_COMPLIANT.
+      Scope:
+        ComplianceResourceTypes:
+          - 'AWS::IAM::User'
+      Source:
+        Owner: AWS
+        SourceIdentifier: ROOT_ACCOUNT_HARDWARE_MFA_ENABLED
+Parameters:
+  ConfigRuleName:
+    Type: String
+    Default: root-account-hardware-mfa-enabled
+    Description: The name that you assign to the AWS Config rule.
+    MinLength: '1'
+    ConstraintDescription: This parameter is required.
+Metadata: {}
+Conditions: {}
